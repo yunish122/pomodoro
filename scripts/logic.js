@@ -8,7 +8,7 @@ const modes = {
         intervalId: null,
         isRunning: false,
         time_left: 25*60,
-        actual_left: 25*60,
+        actual_time: 25*60,
         elapsed_time:0
     },
     thirty_min:{
@@ -16,7 +16,7 @@ const modes = {
         intervalId: null,
         isRunning: false,
         time_left: 30*60,
-        actual_left: 30*60,
+        actual_time: 30*60,
 
         elapsed_time:0
     },
@@ -25,7 +25,7 @@ const modes = {
         intervalId: null,
         isRunning: false,
         time_left: 50*60,
-        actual_left: 50*60,
+        actual_time: 50*60,
 
         elapsed_time:0
     },
@@ -34,7 +34,7 @@ const modes = {
         intervalId: null,
         isRunning: false,
         time_left: 5*60,
-        actual_left: 5*60,
+        actual_time: 5*60,
 
         elapsed_time:0
     },
@@ -43,8 +43,16 @@ const modes = {
         intervalId: null,
         isRunning: false,
         time_left: 15*60,
-        actual_left: 15*60,
+        actual_time: 15*60,
 
+        elapsed_time:0
+    },
+    custom_time:{
+        mode: "custom time",
+        intervalId: null,
+        isRunning:false,
+        time_left: null, 
+        actual_time: null,
         elapsed_time:0
     }
 }
@@ -109,7 +117,7 @@ function reset(){
     currMode.time_left = 25 * 60;
     currMode.elapsed_time = 0;
     clearInterval(currMode.intervalId);
-    document.getElementById("timer").textContent = `${currMode.actual_left/60}:00`;
+    document.getElementById("timer").textContent = `${currMode.actual_time/60}:00`;
 
 }
 
@@ -136,6 +144,12 @@ document.getElementById('short_rest').addEventListener('click',()=>{
 document.getElementById('long_rest').addEventListener('click',()=>{
     switchMode('long_rest');
 
+})
+document.getElementById('submit_timer').addEventListener('click',()=>{
+    modes['custom_time'].time_left = parseInt(document.getElementById('custom_min').value)*60;
+    modes['custom_time'].actual_time = parseInt(document.getElementById('custom_min').value)*60;
+    switchMode('custom_time');
+    document.getElementById('custom_min').value = '';
 })
 
 document.getElementById('start').addEventListener('click',()=>start());

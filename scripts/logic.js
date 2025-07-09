@@ -2,7 +2,11 @@
 
 let currMode = {}
 
+let session = 0
+
 const modes = {
+
+
     focus : {
         mode: 'focus',
         intervalId: null,
@@ -73,7 +77,9 @@ const modes = {
 
 // switch garxa mode
 function switchMode(mode){
+    pause()
     currMode = modes[mode];
+    currMode.isRunning = false;
     uiUpdate()
 }
 
@@ -93,11 +99,18 @@ function start(){
     if(currMode.isRunning){
         return;
     }
+
     currMode.isRunning = true;
     let id = setInterval(()=>{
+
         currMode.time_left--;
         currMode.elapsed_time++;
         currMode.intervalId = id;
+        if(currMode.time_left<=0){
+            session++;
+            document.getElementById('session_counter').textContent = `${session}`
+            reset()
+        }
         uiUpdate()    
     },1000)
 
@@ -114,7 +127,7 @@ function pause(){
 
 function reset(){
     currMode.isRunning = false;
-    currMode.time_left = 25 * 60;
+    currMode.time_left = currMode.actual_time;
     currMode.elapsed_time = 0;
     clearInterval(currMode.intervalId);
     document.getElementById("timer").textContent = `${currMode.actual_time/60}:00`;
@@ -126,30 +139,51 @@ function reset(){
 
 document.getElementById('30min').addEventListener('click',()=>{
     switchMode('thirty_min');
-
 })
 document.getElementById('50min').addEventListener('click',()=>{
     switchMode('fifty_min');
-
 })
 document.getElementById('25min').addEventListener('click',()=>{
     switchMode('focus');
-
 })
 
-document.getElementById('short_rest').addEventListener('click',()=>{
+document.getElementById('short_rest').addEventListener('click',(e)=>{
     switchMode('short_rest');
-
+    remove(e);
 })
-document.getElementById('long_rest').addEventListener('click',()=>{
+document.getElementById('long_rest').addEventListener('click',(e)=>{
     switchMode('long_rest');
+    remove(e);
 
 })
+document.getElementById('focus').addEventListener('click',(e)=>{
+    switchMode('focus');
+    remove(e);
+
+})
+
+
+//passed e as arg, first removed all classes, and then added the class to the targetted element
+function remove(e){
+    let arr = document.querySelectorAll('#rest_div button');
+    arr.forEach(element => {
+
+       if( element.classList.contains('actives')){
+            element.classList.remove('actives');
+       }
+       e.target.classList.add('actives')
+
+    } )
+}
+
 document.getElementById('submit_timer').addEventListener('click',()=>{
-    modes['custom_time'].time_left = parseInt(document.getElementById('custom_min').value)*60;
-    modes['custom_time'].actual_time = parseInt(document.getElementById('custom_min').value)*60;
-    switchMode('custom_time');
-    document.getElementById('custom_min').value = '';
+    if(document.getElementById('custom_min').value){
+        modes['custom_time'].time_left = parseInt(document.getElementById('custom_min').value)*60;
+        modes['custom_time'].actual_time = parseInt(document.getElementById('custom_min').value)*60;
+        switchMode('custom_time');
+        document.getElementById('custom_min').value = '';    
+    }
+
 })
 
 document.getElementById('start').addEventListener('click',()=>start());

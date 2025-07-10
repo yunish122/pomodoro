@@ -190,8 +190,16 @@ function remove(e){
     } )
 }
 
+function validateInput(input){
+    let exp = /^\d+$/;
+    if(!exp.test(input)){
+        return false
+    }
+}
+
 document.getElementById('submit_timer').addEventListener('click',()=>{
-    if(document.getElementById('custom_min').value){
+    let input = document.getElementById('custom_min').value
+    if(input && validateInput(input)){
         modes['custom_time'].time_left = parseInt(document.getElementById('custom_min').value)*60;
         modes['custom_time'].actual_time = parseInt(document.getElementById('custom_min').value)*60;
         switchMode('custom_time');

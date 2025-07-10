@@ -1,4 +1,8 @@
 
+let audio = new Audio('./audio/wall-clock-ticks-quartz-clock-25480.mp3')
+
+audio.volume = 0.7;
+audio.loop = true;
 
 let currMode = {}
 
@@ -78,6 +82,7 @@ const modes = {
 // switch garxa mode
 function switchMode(mode){
     pause()
+    pauseAudio()
     currMode = modes[mode];
     currMode.isRunning = false;
     uiUpdate()
@@ -102,7 +107,7 @@ function start(){
 
     currMode.isRunning = true;
     let id = setInterval(()=>{
-
+        playAudio()
         currMode.time_left--;
         currMode.elapsed_time++;
         currMode.intervalId = id;
@@ -120,12 +125,13 @@ function pause(){
     if(!currMode.isRunning){
         return
     }
-
+    pauseAudio()
     clearInterval(currMode.intervalId);
     currMode.isRunning = false;
 }
 
 function reset(){
+    pauseAudio()
     currMode.isRunning = false;
     currMode.time_left = currMode.actual_time;
     currMode.elapsed_time = 0;
@@ -134,7 +140,15 @@ function reset(){
 
 }
 
+function playAudio(){
 
+   audio.play();
+
+}
+
+function pauseAudio(){
+    audio.pause()
+}
 //event listeners 
 
 document.getElementById('30min').addEventListener('click',()=>{

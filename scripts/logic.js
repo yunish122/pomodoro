@@ -17,7 +17,8 @@ const modes = {
         isRunning: false,
         time_left: 25*60,
         actual_time: 25*60,
-        elapsed_time:0
+        elapsed_time:0,
+        isDark: false
     },
     thirty_min:{
         mode: "30min",
@@ -25,7 +26,7 @@ const modes = {
         isRunning: false,
         time_left: 30*60,
         actual_time: 30*60,
-
+        isDark: false,
         elapsed_time:0
     },
     fifty_min:{
@@ -34,7 +35,7 @@ const modes = {
         isRunning: false,
         time_left: 50*60,
         actual_time: 50*60,
-
+        isDark: false,
         elapsed_time:0
     },
     short_rest: {
@@ -43,7 +44,7 @@ const modes = {
         isRunning: false,
         time_left: 5*60,
         actual_time: 5*60,
-
+        isDark: false,
         elapsed_time:0
     },
     long_rest:{
@@ -52,7 +53,7 @@ const modes = {
         isRunning: false,
         time_left: 15*60,
         actual_time: 15*60,
-
+        isDark: false,
         elapsed_time:0
     },
     custom_time:{
@@ -61,7 +62,8 @@ const modes = {
         isRunning:false,
         time_left: null, 
         actual_time: null,
-        elapsed_time:0
+        elapsed_time:0,
+        isDark: false
     }
 }
 
@@ -85,6 +87,12 @@ function switchMode(mode){
     pauseAudio()
     currMode = modes[mode];
     currMode.isRunning = false;
+    if(currMode.isDark){
+        document.getElementById('focus').classList.add('dark_actives')
+    }else{
+        document.getElementById('focus').classList.add('actives')
+
+    }
     uiUpdate()
 }
 
@@ -147,7 +155,11 @@ function playAudio(){
 }
 
 function pauseAudio(){
-    audio.pause()
+    audio.pause();
+}
+
+function mute(){
+    audio.volume = 0;
 }
 //event listeners 
 
@@ -181,11 +193,16 @@ document.getElementById('focus').addEventListener('click',(e)=>{
 function remove(e){
     let arr = document.querySelectorAll('#rest_div button');
     arr.forEach(element => {
+        if(currMode){
+            if( element.classList.contains('dark_actives')){
+                element.classList.remove('dark_actives');
+            } 
+        }else{
+            if( element.classList.contains('actives')){
+                element.classList.remove('actives');
+            }  
+        }
 
-       if( element.classList.contains('actives')){
-            element.classList.remove('actives');
-       }
-       e.target.classList.add('actives')
 
     } )
 }
@@ -204,6 +221,18 @@ document.getElementById('submit_timer').addEventListener('click',()=>{
         modes['custom_time'].actual_time = parseInt(document.getElementById('custom_min').value)*60;
         switchMode('custom_time');
         document.getElementById('custom_min').value = '';    
+    }
+
+})
+
+document.getElementById('dark_light').addEventListener('click',()=>{
+    if(currMode){
+        currMode.isDark = !currMode.isDark;
+        if(currMode.isDark){
+            document.querySelector('html').classList.add('dark');
+        }else{
+            document.querySelector('html').classList.remove('dark');
+        }
     }
 
 })

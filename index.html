@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,71 +14,110 @@
             font-family: "Roboto", sans-serif;
 ;
         }
-        .in_active{
-            background: rgba(255, 255, 255, 0.4);
-            box-shadow: 1px 1px 10px 0px rgb(234, 234, 234);
-        }
+
         .actives{
             background: rgba(255, 255, 255, 0.7);
             box-shadow: 0px 2px 5px 0px rgb(213, 213, 213);
         }
+        .dark .dark_actives{
+            background-color: rgb(41 37 36 / 0.6);
+            
+
+        }
+        .dark .dark_actives_hover{
+            background-color: "#f5f5f4";
+        }
+
+        @keyframes upDown {
+            0%,100%{
+                transform: translateY(0);
+                transform: scale(1);
+            }25%{
+                transform: translateY(3px);
+                transform: scale(1.01);
+            }50%{
+                transform: translateY(6px);
+                transform: scale(1.02);
+            }75%{
+                transform: translateY(-3px);
+                transform: scale(1.01);
+            }
+        }
+        .upDown{
+            animation: upDown 2s ease-in-out infinite;
+        }
     </style>
 </head>
-<body class="relative bg-gradient-to-r from-stone-200 via-amber-20 to-orange-50 w-full h-full">
-
+<body class="relative bg-gradient-to-r from-stone-200 via-amber-20 to-orange-50 dark:bg-gradient-to-br dark:from-slate-800 dark:via-slate-700 dark:to-stone-800 w-full h-full">
+        <div class="upDown absolute rounded-full bg-sage-300 dark:bg-emerald-400 opacity-[0.03] top-1/3 left-1/4 w-96 h-96"></div>
+        <div class="upDown absolute rounded-full bg-sage-300 dark:bg-emerald-400 opacity-[0.03] bottom-1/3 right-1/4 w-80 h-80"></div>
     <div class="px-3 py-4 lg:py-7 lg:px-7 w-full h-full  flex flex-col gap-5">
         <!-- Title, day/night -->
+  
         <div class="flex justify-between items-center px-3">
-            <div class="flex justify-start items-center gap-3.5 ">
-                <span class="shadow-md/10 shadow-black rounded-[50%]  bg-white w-10 h-10 flex items-center justify-center"><img src="assets/icons8-leaf-48.png" class="w-6 "></span>
+            <div class="flex justify-start items-center gap-3.5">
+                <span class="shadow-md/10 shadow-black rounded-[50%] dark:bg-stone-700/60 bg-white w-10 h-10 flex items-center justify-center">
+                    <img src="assets/icons8-leaf-48.png" class="w-6 dark:hidden">
+                    <img src="./assets/icons8-leaf-48 (1).png" class="w-6 hidden dark:block">
+                </span>
                 <div>
-                    <h1 class="text-xl lg:text-[2rem] tracking-wide text-black/60">Mindful Focus</h1>
-                    <h2 class="text-sm lg:text-lg tracking-wide text-black/50">Gentle Productivity</h2>
+                    <h1 class="text-xl lg:text-[2rem] tracking-wide text-black/60 dark:text-white/80">Mindful Focus</h1>
+                    <h2 class="text-sm lg:text-lg tracking-wide text-black/50 dark:text-white/70">Gentle Productivity</h2>
                 </div>
             </div>
-            <span class="shadow-md/10 shadow-black rounded-[50%]  bg-white w-7 h-7 lg:w-10 lg:h-10 flex items-center justify-center"><img src="assets/icons8-moon-48.png" class="w-3 lg:w-5"></span>
+            <span id="dark_light" class="shadow-md/10 shadow-black rounded-[50%] dark:bg-stone-700/60 bg-white w-7 h-7 lg:w-10 lg:h-10 flex items-center justify-center cursor-pointer">
+                <img src="assets/icons8-moon-48.png" class="w-3 lg:w-5 dark:hidden">
+                <img src="assets/icons8-sun.svg" class="w-6 hidden dark:block">
+            </span>
         </div>
         <!-- this will contian the 3 options -->
-        <div id="rest_div" class="flex items-center justify-center gap-4 flex-wrap mt-10">
-            <button id="focus" class="actives shrink text-xl text-[#374151] tracking-wide w-40 h-14 in_active /30 shadow-black/10 bg rounded-[16px] backdrop-opacity-10">Focus Time</button>
-            <button id="short_rest" class="shrink text-xl text-[#374151] tracking-wide w-40 h-14 in_active /30 shadow-black/10 bg rounded-[16px] backdrop-opacity-10">Short Rest</button>
-            <button id="long_rest" class="shrink text-xl text-[#374151] tracking-wide w-40 h-14 in_active /30 shadow-black/10 bg rounded-[16px] backdrop-opacity-10">Long Rest</button>
+         <!--<button id="focus" class="bg-white/40 shadow-[1px_1px_10px_0px_rgb(234,234,234)] shrink text-lg text-[#374151] tracking-wide w-35 h-13  shadow-black/10 bg rounded-[16px] backdrop-opacity-10 dark:bg-stone-800/60 dark:text-white/80 dark:border-stone-700/30">Focus Time</button>
+            so here my problem was i applied one style(light) too specific and one style(dark) not so specific.
+            and in tailwind one with more specific wins and overrides.
+         -->
+        <div id="rest_div" class="flex items-center justify-center gap-4 flex-wrap mt-8">
+            <button id="focus" class="bg-white/40 shadow-[1px_1px_10px_rgba(234,234,234,0.6)] shrink text-lg text-[#374151] tracking-wide w-35 h-13 rounded-[16px] backdrop-opacity-10 dark:bg-stone-800/60 dark:text-white/80 dark:shadow-lg dark:border-stone-700/30">Focus Time</button>
+            <button id="short_rest" class="shrink bg-white/40  shadow-[1px_1px_10px_rgba(234,234,234,0.6)]  text-lg text-[#374151] tracking-wide w-35 h-13 rounded-[16px] backdrop-opacity-10 dark:bg-stone-800/60 dark:text-white/80 dark:shadow-lg dark:border-stone-700/30">Short Rest</button>
+            <button id="long_rest" class="shrink bg-white/40 shadow-[1px_1px_10px_rgba(234,234,234,0.6)] text-lg text-[#374151] tracking-wide w-35 h-13  rounded-[16px] backdrop-opacity-10 dark:bg-stone-800/60 dark:text-white/80 dark:shadow-lg dark:border-stone-700/30">Long Rest</button>
         </div>
 
         <!-- main card that contains the timer -->
-        <div id="main_card" class= " mx-auto flex shadow-lg shadow-black/10 rounded-[12px] justify-center items-center bg-white/80 backdrop-opacity-0 w-[95%] max-w-[360px] sm:w-[450px] sm:min-h-[400px] min-h-[300px] 
-        mt-10
+        <div id="main_card" class= " mx-auto dark:bg-stone-800/40 dark:border-stone-700/30 flex shadow-lg shadow-black/10 rounded-[12px] justify-center items-center bg-white/80 backdrop-opacity-0 w-[95%] max-w-[360px] sm:w-[450px] lg:w-[430px] lg:min-h-[380px] sm:min-h-[400px] min-h-[300px] 
+        mt-8
         ">
-            <div class="flex flex-col justify-center items-center gap-2 sm:w-[300px] sm:min-h-[300px] w-[230px] min-h-[230px] overflow-hidden mx-auto border-4 border-black/15 rounded-[50%]">
-                <h1 id="timer" class="sm:text-[4.5rem] text-[4rem] text-black/70">25:00</h1>
-                <div class="w-27 h-8 text-black/60 text-center flex justify-center items-center mx-auto border-0 rounded-[20px] bg-black/10"><p>Focus Time</p></div>
+            <div class="flex flex-col justify-center items-center gap-2 sm:w-[300px] sm:min-h-[300px] w-[230px] lg:w-[280px] lg:min-h-[280px] min-h-[230px] overflow-hidden mx-auto border-4 border-black/15 dark:border-gray-700 rounded-[50%]">
+                <h1 id="timer" class="sm:text-[4.5rem] text-[4rem] text-black/70 dark:text-white/80">25:00</h1>
+                <div class="w-27 h-8 text-black/60 dark:text-stone-200 text-center flex justify-center items-center mx-auto border-0 rounded-[20px] bg-black/10 dark:bg-stone-800/50"><p>Focus Time</p></div>
             </div>
         </div>
 
          <!-- timer Butons -->
 
         <div class="flex flex-wrap justify-center items-center gap-5 mt-8">
-            <button id="25min" class="w-35 text-center h-13 text-xl rounded-lg hover:cursor-pointer text-black/50 bg-white/75 shadow-md shadow-black/10">+25 min</button>
-            <button id="30min" class="w-35 text-center h-13 text-xl rounded-lg hover:cursor-pointer text-black/50 bg-white/75 shadow-md shadow-black/10">+30 min</button>
-            <button id="50min" class="w-35 text-center h-13 text-xl rounded-lg hover:cursor-pointer text-black/50 bg-white/75 shadow-md shadow-black/10">+50 min</button>
+            <button id="25min" class="w-35 text-center h-13 text-xl rounded-lg hover:cursor-pointer text-black/50 bg-white/75 dark:text-stone-300 dark:bg-stone-800/40 dark:hover:bg-stone-700/50 dark:border-stone-700/30 shadow-md shadow-black/10">+25 min</button>
+            <button id="30min" class="w-35 text-center h-13 text-xl rounded-lg hover:cursor-pointer text-black/50 bg-white/75 dark:text-stone-300 dark:bg-stone-800/40 dark:hover:bg-stone-700/50 dark:border-stone-700/30 shadow-md shadow-black/10">+30 min</button>
+            <button id="50min" class="w-35 text-center h-13 text-xl rounded-lg hover:cursor-pointer text-black/50 bg-white/75 dark:text-stone-300 dark:bg-stone-800/40 dark:hover:bg-stone-700/50 dark:border-stone-700/30 shadow-md shadow-black/10">+50 min</button>
         </div>
 
         <!-- custom timer and set timer -->
-        <div class="flex flex-col justify-center items-center gap-5 mt-10">
-            <input type="number" id="custom_min" placeholder="Custom minutes" class="focus:border-1 focus:outline-none  focus:border-black/50 tracking-wide inline w- 50 h-13 text-center text-lg bg-white/80 rounded-lg text-black/80">
+        <div class="flex flex-col justify-center items-center gap-5 mt-5">
+            <input type="number" id="custom_min" placeholder="Custom minutes" class="focus:border-1 focus:outline-none  focus:border-black/50 tracking-wide inline w- 50 h-13 text-center text-lg bg-white/80 dark:bg-stone-800/60 dark:text-white/80 rounded-lg text-black/80">
             <button id="submit_timer" class="tracking-wide w-35 text-lg h-13 rounded-lg text-white/90 bg-[#07b981]">Set Time </button>
         </div>
 
         <!-- start pause reset -->
         <div class="flex flex-col sm:flex sm:justify-center sm:flex-row sm:mb-10 sm:items-center justify-center items-center gap-5 mt-10">
-            <button id="start" class="flex  justify-center items-center gap-3 w-full sm:w-50 sm:h-15 bg-[#04ad77cf] text-white/90 text-xl rounded-xl p-3"><img class="w-[20px] h-[20px]" src="assets/icons8-play-50.png">Start</button>
-            <button id="pause" class="flex justify-center items-center gap-3 w-full sm:w-50 sm:h-15 bg-[#fc951fd5] text-white/90 text-xl rounded-xl p-3"><img class="w-[20px] h-[20px]" src="assets/icons8-pause-50.png" alt="pause">Pause</button>
-            <button id="reset" class="flex justify-center items-center gap-3 w-full sm:w-50 sm:h-15 bg-[#57534e] text-white/90 text-xl rounded-xl p-3"><img class="w-[20px] h-[20px]" src="assets/icons8-reset-50.png" alt="reset">Reset</button>
+            <button id="start" class="flex  justify-center items-center gap-3 w-[150px]  sm:w-50 sm:h-15 bg-[#04ad77cf] text-white/90 text-xl rounded-xl p-3"><img class="w-[20px] h-[20px]" src="assets/icons8-play-50.png">Start</button>
+            <button id="pause" class="flex justify-center items-center gap-3 w-[150px] sm:w-50 sm:h-15 bg-[#fc951fd5] text-white/90 text-xl rounded-xl p-3"><img class="w-[20px] h-[20px]" src="assets/icons8-pause-50.png" alt="pause">Pause</button>
+            <button id="reset" class="flex justify-center items-center gap-3 w-[150px] sm:w-50 sm:h-15 bg-[#57534e] text-white/90 text-xl rounded-xl p-3"><img class="w-[20px] h-[20px]" src="assets/icons8-reset-50.png" alt="reset">Reset</button>
         </div>
         <!-- Session Counter -->
-        <div class="h-35 bg-white w-45 flex flex-col justify-center items-center mx-auto rounded-xl shadow-lg shadow-black/20">
+        <div class="h-35 bg-white dark:bg-stone-800/40 dark:backdrop-opacity-10 w-45 flex flex-col justify-center items-center mx-auto rounded-xl shadow-lg shadow-black/20">
             <h1 id="session_counter" class="text-[2rem] font-light text-green-400">0</h1>
-            <p class="text-sm tracking-wide text-black/50">Completed Sessions</p>
+            <p class="text-sm tracking-wide text-black/50 dark:text-white/80">Completed Sessions</p>
+        </div>
+        <div>
+            <button onclick="mute()">Mute</button>
         </div>
     </div>
 </body>
